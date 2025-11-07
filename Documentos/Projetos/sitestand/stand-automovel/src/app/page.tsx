@@ -1,5 +1,7 @@
 import CarCard from '@/components/CarCard'
 
+export const dynamic = 'force-dynamic'
+
 async function getCars() {
   try {
     const res = await fetch('http://localhost:3000/api/cars', {
