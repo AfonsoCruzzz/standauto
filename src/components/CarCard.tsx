@@ -22,9 +22,9 @@ export default function CarCard({ car }: CarCardProps) {
         <div className="h-48 bg-gray-200 flex items-center justify-center">
           {car.images && car.images.length > 0 ? (
             <img 
-              src={car.images[0]} 
+              src={car.images?.[0] || '/placeholder.jpg'}
               alt={`${car.brand} ${car.model}`}
-              className="w-full h-full object-cover"
+              className="w-full h-40 object-cover rounded-t"
             />
           ) : (
             <span className="text-gray-500">Sem imagem</span>
