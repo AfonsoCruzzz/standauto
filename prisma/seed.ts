@@ -10,64 +10,64 @@ async function main() {
   await prisma.car.createMany({
     data: [
       {
-        brand: 'Toyota',
-        model: 'Corolla',
-        year: 2022,
-        price: 25000,
+        brand: 'Peugeot',
+        model: '2008',
+        year: 2023,
+        price: 20000,
         fuelType: 'Gasolina',
         km: 15000,
-        images: ['/cars/toyota-corolla.jpg'],
-        description: 'Toyota Corolla em excelente estado, com poucos quilómetros e manutenção sempre feita na marca.'
+        images: ['/public/peugeot2008.webp'],
+        description: 'Peugeot 2008 em excelente estado, com poucos quilómetros e manutenção sempre feita na marca.'
       },
       {
-        brand: 'BMW',
-        model: 'Série 3',
-        year: 2021,
+        brand: 'Mercedes-Benz',
+        model: 'Classe A',
+        year: 2023,
         price: 35000,
         fuelType: 'Diesel',
         km: 25000,
-        images: ['/cars/bmw-serie3.jpg'],
-        description: 'BMW Série 3 com extras premium, teto solar e sistema de som Harman Kardon.'
+        images: ['/public/mercedes.jpg'],
+        description: 'Mercedes-Benz Classe A com extras premium, teto solar e sistema de som Harman Kardon.'
       },
       {
-        brand: 'Volkswagen',
-        model: 'Golf',
-        year: 2020,
-        price: 22000,
+        brand: 'Renault',
+        model: 'Clio',
+        year: 2022,
+        price: 15000,
         fuelType: 'Gasolina',
-        km: 40000,
-        images: ['/cars/vw-golf.jpg'],
-        description: 'Volkswagen Golf bem conservado, ideal para cidade com consumo reduzido.'
+        km: 30000,
+        images: ['/public/clio.webp'],
+        description: 'Renault Clio bem conservado, ideal para cidade com consumo reduzido.'
       },
       {
-        brand: 'Mercedes',
-        model: 'Classe A',
-        year: 2023,
-        price: 38000,
-        fuelType: 'Híbrido',
-        km: 5000,
-        images: ['/cars/mercedes-classea.jpg'],
-        description: 'Mercedes Classe A quase novo, tecnologia de ponta e conforto excecional.'
+        brand: 'Dacia',
+        model: 'Sandero',
+        year: 2024,
+        price: 16000,
+        fuelType: 'GPL',
+        km: 14000,
+        images: ['/public/dacia.webp'],
+        description: 'Dacia Sandero quase novo, tecnologia de ponta e conforto excecional.'
       },
       {
-        brand: 'Audi',
-        model: 'A4',
+        brand: 'Tesla',
+        model: 'Model 3',
         year: 2021,
         price: 32000,
-        fuelType: 'Diesel',
-        km: 30000,
-        images: ['/cars/audi-a4.jpg'],
-        description: 'Audi A4 Avant, espaço amplo e desempenho excelente para viagens longas.'
+        fuelType: 'Elétrico',
+        km: 50000,
+        images: ['/public/tesla.webp'],
+        description: 'Tesla Model 3, espaço amplo e desempenho excelente com autonomia de até 500 km.'
       },
       {
-        brand: 'Ford',
-        model: 'Focus',
-        year: 2022,
+        brand: 'BMW',
+        model: 'Série 1',
+        year: 2018,
         price: 19500,
         fuelType: 'Gasolina',
-        km: 20000,
-        images: ['/cars/ford-focus.jpg'],
-        description: 'Ford Focus com ótimo custo-benefício, económico e fiável.'
+        km: 77000,
+        images: ['/public/bmw.jpg'],
+        description: 'BMW Série 1 com ótimo custo-benefício, desempenho e fiável.'
       }
     ],
   })
