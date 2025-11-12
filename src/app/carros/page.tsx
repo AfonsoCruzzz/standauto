@@ -20,6 +20,7 @@ export default function CarrosPage() {
   const [cars, setCars] = useState<Car[]>([]);
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   // Buscar carros da API
@@ -27,11 +28,29 @@ export default function CarrosPage() {
     const fetchCars = async () => {
       try {
         const response = await fetch('/api/cars');
+        
+        if (!response.ok) {
+          throw new Error(`Erro HTTP: ${response.status}`);
+        }
+        
         const data = await response.json();
-        setCars(data);
-        setFilteredCars(data);
+        console.log('Dados da API:', data);
+        
+        // Garantir que data é um array
+        if (Array.isArray(data)) {
+          setCars(data);
+          setFilteredCars(data);
+        } else {
+          console.error('Dados não são um array:', data);
+          setError('Formato de dados inválido');
+          setCars([]);
+          setFilteredCars([]);
+        }
       } catch (error) {
         console.error('Erro ao buscar carros:', error);
+        setError('Erro ao carregar carros');
+        setCars([]);
+        setFilteredCars([]);
       } finally {
         setLoading(false);
       }
@@ -42,7 +61,7 @@ export default function CarrosPage() {
 
   // Aplicar filtros da URL
   useEffect(() => {
-    if (cars.length === 0) return;
+    if (!Array.isArray(cars) || cars.length === 0) return;
 
     const brand = searchParams.get('brand') || searchParams.get('marca');
     const model = searchParams.get('model') || searchParams.get('modelo');
@@ -109,6 +128,14 @@ export default function CarrosPage() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg text-red-600">{error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -116,7 +143,7 @@ export default function CarrosPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Cars</h1>
           <p className="text-gray-600 mt-2">
-            Number of listings: {filteredCars.length}
+            Number of listings: {Array.isArray(filteredCars) ? filteredCars.length : 0}
           </p>
         </div>
 
@@ -128,7 +155,7 @@ export default function CarrosPage() {
 
           {/* Lista de Carros */}
           <div className="lg:w-3/4">
-            {filteredCars.length === 0 ? (
+            {!Array.isArray(filteredCars) || filteredCars.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-gray-500 text-lg">
                   No cars found with the selected filters.
