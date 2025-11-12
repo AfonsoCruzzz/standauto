@@ -16,7 +16,7 @@ async function main() {
         price: 20000,
         fuelType: 'Gasolina',
         km: 15000,
-        images: ['/public/peugeot2008.webp'],
+        images: ['/peugeot2008.webp'],
         description: 'Peugeot 2008 em excelente estado, com poucos quilómetros e manutenção sempre feita na marca.'
       },
       {
@@ -26,7 +26,7 @@ async function main() {
         price: 35000,
         fuelType: 'Diesel',
         km: 25000,
-        images: ['/public/mercedes.jpg'],
+        images: ['/mercedes.jpg'],
         description: 'Mercedes-Benz Classe A com extras premium, teto solar e sistema de som Harman Kardon.'
       },
       {
@@ -36,7 +36,7 @@ async function main() {
         price: 15000,
         fuelType: 'Gasolina',
         km: 30000,
-        images: ['/public/clio.webp'],
+        images: ['/clio.webp'],
         description: 'Renault Clio bem conservado, ideal para cidade com consumo reduzido.'
       },
       {
@@ -46,7 +46,7 @@ async function main() {
         price: 16000,
         fuelType: 'GPL',
         km: 14000,
-        images: ['/public/dacia.webp'],
+        images: ['/dacia.webp'],
         description: 'Dacia Sandero quase novo, tecnologia de ponta e conforto excecional.'
       },
       {
@@ -56,7 +56,7 @@ async function main() {
         price: 32000,
         fuelType: 'Elétrico',
         km: 50000,
-        images: ['/public/tesla.webp'],
+        images: ['/tesla.webp'],
         description: 'Tesla Model 3, espaço amplo e desempenho excelente com autonomia de até 500 km.'
       },
       {
@@ -66,7 +66,7 @@ async function main() {
         price: 19500,
         fuelType: 'Gasolina',
         km: 77000,
-        images: ['/public/bmw.jpg'],
+        images: ['/bmw.jpg'],
         description: 'BMW Série 1 com ótimo custo-benefício, desempenho e fiável.'
       }
     ],

@@ -38,7 +38,7 @@ export default function RootLayout({
         <main>{children}</main>
         <footer className="bg-gray-800 text-white p-8 mt-12">
           <div className="container mx-auto text-center">
-            <p>&copy; 2024 Stand Automóvel. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Stand Automóvel. Todos os direitos reservados.</p>
           </div>
         </footer>
       </body>

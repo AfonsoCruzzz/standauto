@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Car {
   id: string
@@ -16,15 +17,28 @@ interface CarCardProps {
 }
 
 export default function CarCard({ car }: CarCardProps) {
+  // Função para obter a imagem correta
+  const getImageSrc = (imagePath: string) => {
+    // Remove '/public' se existir no caminho
+    return imagePath.replace('/public', '')
+  }
+
+  const mainImage = car.images && car.images.length > 0 
+    ? getImageSrc(car.images[0])
+    : '/placeholder.jpg'
+
   return (
     <Link href={`/cars/${car.id}`}>
       <div className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-        <div className="h-48 bg-gray-200 flex items-center justify-center">
+        <div className="h-48 bg-gray-200 flex items-center justify-center relative">
           {car.images && car.images.length > 0 ? (
-            <img 
-              src={car.images?.[0] || '/placeholder.jpg'}
+            <Image 
+              src={mainImage}
               alt={`${car.brand} ${car.model}`}
-              className="w-full h-40 object-cover rounded-t"
+              className="w-full h-full object-cover rounded-t"
+              width={300}
+              height={192}
+              priority={false}
             />
           ) : (
             <span className="text-gray-500">Sem imagem</span>
