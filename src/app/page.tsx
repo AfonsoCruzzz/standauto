@@ -10,7 +10,7 @@ export const revalidate = 0
 async function getCars() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://standauto.vercel.app'
-    const res = await fetch(`${baseUrl}/api/cars`, {
+    const res = await fetch(`${baseUrl}/api/cars?featured=true`, {
       cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
@@ -20,7 +20,10 @@ async function getCars() {
     if (!res.ok) {
       throw new Error(`Failed to fetch cars: ${res.status}`)
     }
-    
+    if (!res.ok) {
+      // Tratamento de erro simples
+      return <div>Erro ao carregar destaques</div>;
+    }
     return res.json()
   } catch (error) {
     console.error('Error fetching cars:', error)

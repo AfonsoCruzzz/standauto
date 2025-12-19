@@ -1,0 +1,7 @@
+"use client"; // Isto é obrigatório porque usamos React Context
+
+import { SessionProvider } from "next-auth/react";
+
+export const Providers = ({ children }: { children: React.ReactNode }) => {
+  return <SessionProvider>{children}</SessionProvider>;
+};

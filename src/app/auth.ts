@@ -60,6 +60,6 @@ export const authOptions: NextAuthOptions = {
     }
   },
   pages: {
-    signIn: '/auth/signin', // Opcional: página de login customizada
+    signIn: '/login', // Opcional: página de login customizada
   }
 }

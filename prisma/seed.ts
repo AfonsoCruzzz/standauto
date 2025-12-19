@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -6,6 +7,7 @@ async function main() {
   // Limpar dados existentes
   await prisma.car.deleteMany()
 
+  const password = await bcrypt.hash('admin123', 10)
   // Adicionar carros de exemplo
   await prisma.car.createMany({
     data: [
@@ -17,7 +19,8 @@ async function main() {
         fuelType: 'Gasolina',
         km: 15000,
         images: ['/peugeot2008.webp'],
-        description: 'Peugeot 2008 em excelente estado, com poucos quilómetros e manutenção sempre feita na marca.'
+        description: 'Peugeot 2008 em excelente estado, com poucos quilómetros e manutenção sempre feita na marca.',
+        isFeatured: true
       },
       {
         brand: 'Mercedes-Benz',
@@ -27,7 +30,8 @@ async function main() {
         fuelType: 'Diesel',
         km: 25000,
         images: ['/mercedes.jpg'],
-        description: 'Mercedes-Benz Classe A com extras premium, teto solar e sistema de som Harman Kardon.'
+        description: 'Mercedes-Benz Classe A com extras premium, teto solar e sistema de som Harman Kardon.',
+        isFeatured: true
       },
       {
         brand: 'Renault',
@@ -37,7 +41,8 @@ async function main() {
         fuelType: 'Gasolina',
         km: 30000,
         images: ['/clio.webp'],
-        description: 'Renault Clio bem conservado, ideal para cidade com consumo reduzido.'
+        description: 'Renault Clio bem conservado, ideal para cidade com consumo reduzido.',
+        isFeatured: true
       },
       {
         brand: 'Dacia',
@@ -47,7 +52,8 @@ async function main() {
         fuelType: 'GPL',
         km: 14000,
         images: ['/dacia.webp'],
-        description: 'Dacia Sandero quase novo, tecnologia de ponta e conforto excecional.'
+        description: 'Dacia Sandero quase novo, tecnologia de ponta e conforto excecional.',
+        isFeatured: true
       },
       {
         brand: 'Tesla',
@@ -57,7 +63,8 @@ async function main() {
         fuelType: 'Elétrico',
         km: 50000,
         images: ['/tesla.webp'],
-        description: 'Tesla Model 3, espaço amplo e desempenho excelente com autonomia de até 500 km.'
+        description: 'Tesla Model 3, espaço amplo e desempenho excelente com autonomia de até 500 km.',
+        isFeatured: true
       },
       {
         brand: 'BMW',
@@ -67,17 +74,32 @@ async function main() {
         fuelType: 'Gasolina',
         km: 77000,
         images: ['/bmw.jpg'],
-        description: 'BMW Série 1 com ótimo custo-benefício, desempenho e fiável.'
+        description: 'BMW Série 1 com ótimo custo-benefício, desempenho e fiável.',
+        isFeatured: true
       }
     ],
   })
+
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@stand.com' },
+    update: {},
+    create: {
+      email: 'admin@stand.com',
+      name: 'Super Admin',
+      password,
+      role: 'ADMIN',
+    },
+  })
+
+  console.log({ admin })
 
   console.log('✅ Dados de exemplo adicionados com sucesso!')
 }
 
 main()
-  .catch((e) => {
+  .catch(async (e) => {
     console.error(e)
+    await prisma.$disconnect()
     process.exit(1)
   })
   .finally(async () => {

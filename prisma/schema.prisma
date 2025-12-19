@@ -19,6 +19,7 @@ model Car {
   images      String[]
   description String?
   isAvailable Boolean  @default(true)
+  isFeatured  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

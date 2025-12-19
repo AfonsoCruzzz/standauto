@@ -5,7 +5,7 @@ export default withAuth(
   function middleware(req) {
     // Verifica se é uma rota de admin e se o utilizador NÃO é admin
     if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.role !== "ADMIN") {
-      return NextResponse.rewrite(new URL("/auth/login?message=NotAuthorized", req.url))
+      return NextResponse.rewrite(new URL("/login?message=NotAuthorized", req.url))
     }
   },
   {
