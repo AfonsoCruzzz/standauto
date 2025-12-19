@@ -1,4 +1,7 @@
 import CarCard from '@/components/CarCard'
+import { getServerSession } from 'next-auth'
+import { authOptions } from './auth'
+import Link from 'next/link'
 
 // Isto é CRÍTICO para funcionar na Vercel
 export const dynamic = 'force-dynamic'
@@ -26,11 +29,26 @@ async function getCars() {
 }
 
 export default async function Home() {
+  const session = await getServerSession(authOptions)
   const cars = await getCars()
   console.log('Cars loaded:', cars.length) // Para debug
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-end mb-4">
+        {session ? (
+          <div className="flex items-center gap-4 text-sm">
+            <span className="text-gray-600">Olá, <strong>{session.user?.name}</strong> ({session.user?.role})</span>
+            {session.user?.role === 'ADMIN' && (
+              <Link href="/admin/dashboard" className="text-blue-600 hover:underline font-medium">Dashboard</Link>
+            )}
+            <Link href="/api/auth/signout" className="text-red-600 hover:underline">Sair</Link>
+          </div>
+        ) : (
+          <Link href="/api/auth/signin" className="text-blue-600 font-medium hover:underline">Entrar na Conta</Link>
+        )}
+      </div>
+
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Stand Automóvel
