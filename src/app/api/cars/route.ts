@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '../../../../lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
@@ -60,6 +62,15 @@ export async function GET(req: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
+
+    // Validação básica para evitar erros se o body vier vazio
+    if (!body || Object.keys(body).length === 0) {
+      return NextResponse.json(
+        { error: 'Request body cannot be empty' },
+        { status: 400 }
+      )
+    }
+
     const car = await prisma.car.create({
       data: body
     })

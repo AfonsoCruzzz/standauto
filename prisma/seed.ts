@@ -98,7 +98,7 @@ async function main() {
 
 main()
   .catch(async (e) => {
-    console.error(e)
+    console.error('Erro no seed:', e)
     await prisma.$disconnect()
     process.exit(1)
   })
