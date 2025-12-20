@@ -1,14 +1,16 @@
 "use client";
 
+// 1. Esta linha resolve o erro do Build na Vercel
+export const dynamic = "force-dynamic";
+
 import { signIn } from "next-auth/react";
-import { useState, Suspense } from "react"; // <--- Importar Suspense
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-// 1. Criamos um componente separado SÓ para o conteúdo que usa useSearchParams
 function LoginContent() {
   const router = useRouter();
-  const searchParams = useSearchParams(); // Este hook obriga ao uso de Suspense
+  const searchParams = useSearchParams(); 
   const errorUrl = searchParams.get("error");
   
   const [email, setEmail] = useState("");
@@ -37,7 +39,6 @@ function LoginContent() {
     <div className="w-full max-w-md p-8 bg-gray-900 rounded-xl border border-gray-800 shadow-2xl">
         <h1 className="text-3xl font-bold text-center mb-2 text-blue-500">Stand Automóvel</h1>
         
-        {/* Cábula para o Professor */}
         <div className="bg-yellow-900/30 border border-yellow-600 p-3 rounded-lg mb-6 text-sm text-yellow-200">
           <p className="font-bold">🎓 Acesso Admin:</p>
           <p>Email: admin@stand.com | Pass: admin123</p>
@@ -96,11 +97,10 @@ function LoginContent() {
   );
 }
 
-// 2. O componente principal apenas envolve o conteúdo com Suspense
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-950 text-white p-4">
-      <Suspense fallback={<div className="text-white">A carregar formulário...</div>}>
+      <Suspense fallback={<div className="text-white">A carregar...</div>}>
         <LoginContent />
       </Suspense>
     </div>
