@@ -30,7 +30,7 @@ function LoginContent() {
     if (res?.error) {
       setError("Email ou password incorretos.");
     } else {
-      router.push("/admin/dashboard"); 
+      router.push("/"); 
       router.refresh();
     }
   };
