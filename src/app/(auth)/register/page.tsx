@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -57,6 +58,12 @@ export default function RegisterPage() {
         <button type="submit" className="w-full bg-blue-600 p-2 rounded hover:bg-blue-700 font-bold">
           Registar
         </button>
+        <div className="mt-6 text-center text-sm text-gray-500">
+          Já tens conta?{" "}
+          <Link href="/login" className="text-blue-400 hover:underline">
+            Entrar
+          </Link>
+        </div>
       </form>
     </div>
   );
