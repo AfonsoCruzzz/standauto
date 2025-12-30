@@ -7,6 +7,7 @@ import Link from 'next/link'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
+// Na tua homepage, atualiza a função getCars para:
 async function getCars() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://standauto.vercel.app'
@@ -15,10 +16,11 @@ async function getCars() {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
     
     if (!res.ok) {
-      throw new Error(`Failed to fetch cars: ${res.status}`)
+      console.error('Failed to fetch cars:', res.status);
+      return [];
     }
     if (!res.ok) {
       // Tratamento de erro simples
@@ -26,8 +28,8 @@ async function getCars() {
     }
     return res.json()
   } catch (error) {
-    console.error('Error fetching cars:', error)
-    return []
+    console.error('Error fetching cars:', error);
+    return [];
   }
 }
 
@@ -38,20 +40,6 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-end mb-4">
-        {session ? (
-          <div className="flex items-center gap-4 text-sm">
-            <span className="text-gray-600">Olá, <strong>{session.user?.name}</strong> ({session.user?.role})</span>
-            {session.user?.role === 'ADMIN' && (
-              <Link href="/admin/dashboard" className="text-blue-600 hover:underline font-medium">Dashboard</Link>
-            )}
-            <Link href="/api/auth/signout" className="text-red-600 hover:underline">Sair</Link>
-          </div>
-        ) : (
-          <Link href="/api/auth/signin" className="text-blue-600 font-medium hover:underline">Entrar na Conta</Link>
-        )}
-      </div>
-
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Stand Automóvel

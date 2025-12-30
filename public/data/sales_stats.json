@@ -1,0 +1,837 @@
+[
+  {
+    "brand": "AION",
+    "fuel": "Elétrico (BEV)",
+    "count": 11
+  },
+  {
+    "brand": "ALFA ROMEO",
+    "fuel": "Gasolina",
+    "count": 1
+  },
+  {
+    "brand": "ALFA ROMEO",
+    "fuel": "Elétrico (BEV)",
+    "count": 16
+  },
+  {
+    "brand": "ALFA ROMEO",
+    "fuel": "PHEV/Gasolina",
+    "count": 3
+  },
+  {
+    "brand": "ALFA ROMEO",
+    "fuel": "HEV/Gasolina",
+    "count": 35
+  },
+  {
+    "brand": "ALPINE",
+    "fuel": "Elétrico (BEV)",
+    "count": 8
+  },
+  {
+    "brand": "ASTON MARTIN",
+    "fuel": "Gasolina",
+    "count": 6
+  },
+  {
+    "brand": "AUDI",
+    "fuel": "Gasolina",
+    "count": 64
+  },
+  {
+    "brand": "AUDI",
+    "fuel": "Gasóleo",
+    "count": 24
+  },
+  {
+    "brand": "AUDI",
+    "fuel": "Elétrico (BEV)",
+    "count": 141
+  },
+  {
+    "brand": "AUDI",
+    "fuel": "PHEV/Gasolina",
+    "count": 133
+  },
+  {
+    "brand": "AUDI",
+    "fuel": "HEV/Gasolina",
+    "count": 34
+  },
+  {
+    "brand": "BENTLEY",
+    "fuel": "PHEV/Gasolina",
+    "count": 2
+  },
+  {
+    "brand": "BMW",
+    "fuel": "Gasolina",
+    "count": 84
+  },
+  {
+    "brand": "BMW",
+    "fuel": "Gasóleo",
+    "count": 27
+  },
+  {
+    "brand": "BMW",
+    "fuel": "Elétrico (BEV)",
+    "count": 375
+  },
+  {
+    "brand": "BMW",
+    "fuel": "PHEV/Gasolina",
+    "count": 649
+  },
+  {
+    "brand": "BMW",
+    "fuel": "HEV/Gasolina",
+    "count": 21
+  },
+  {
+    "brand": "BYD",
+    "fuel": "Elétrico (BEV)",
+    "count": 460
+  },
+  {
+    "brand": "BYD",
+    "fuel": "PHEV/Gasolina",
+    "count": 77
+  },
+  {
+    "brand": "CITROEN",
+    "fuel": "Gasolina",
+    "count": 228
+  },
+  {
+    "brand": "CITROEN",
+    "fuel": "Gasóleo",
+    "count": 187
+  },
+  {
+    "brand": "CITROEN",
+    "fuel": "Elétrico (BEV)",
+    "count": 152
+  },
+  {
+    "brand": "CITROEN",
+    "fuel": "PHEV/Gasolina",
+    "count": 3
+  },
+  {
+    "brand": "CITROEN",
+    "fuel": "HEV/Gasolina",
+    "count": 216
+  },
+  {
+    "brand": "CUPRA",
+    "fuel": "Gasolina",
+    "count": 3
+  },
+  {
+    "brand": "CUPRA",
+    "fuel": "Gasóleo",
+    "count": 27
+  },
+  {
+    "brand": "CUPRA",
+    "fuel": "Elétrico (BEV)",
+    "count": 35
+  },
+  {
+    "brand": "CUPRA",
+    "fuel": "PHEV/Gasolina",
+    "count": 153
+  },
+  {
+    "brand": "CUPRA",
+    "fuel": "HEV/Gasolina",
+    "count": 26
+  },
+  {
+    "brand": "DACIA",
+    "fuel": "Gasolina",
+    "count": 125
+  },
+  {
+    "brand": "DACIA",
+    "fuel": "Elétrico (BEV)",
+    "count": 190
+  },
+  {
+    "brand": "DACIA",
+    "fuel": "HEV/Gasolina",
+    "count": 194
+  },
+  {
+    "brand": "DEEPAL",
+    "fuel": "Elétrico (BEV)",
+    "count": 20
+  },
+  {
+    "brand": "DONG FENG",
+    "fuel": "Elétrico (BEV)",
+    "count": 14
+  },
+  {
+    "brand": "DS",
+    "fuel": "Gasóleo",
+    "count": 14
+  },
+  {
+    "brand": "DS",
+    "fuel": "Elétrico (BEV)",
+    "count": 7
+  },
+  {
+    "brand": "DS",
+    "fuel": "PHEV/Gasolina",
+    "count": 13
+  },
+  {
+    "brand": "FARIZON",
+    "fuel": "Elétrico (BEV)",
+    "count": 6
+  },
+  {
+    "brand": "FERRARI",
+    "fuel": "PHEV/Gasolina",
+    "count": 3
+  },
+  {
+    "brand": "FIAT",
+    "fuel": "Gasóleo",
+    "count": 221
+  },
+  {
+    "brand": "FIAT",
+    "fuel": "Elétrico (BEV)",
+    "count": 83
+  },
+  {
+    "brand": "FIAT",
+    "fuel": "HEV/Gasolina",
+    "count": 236
+  },
+  {
+    "brand": "FORD",
+    "fuel": "Gasolina",
+    "count": 65
+  },
+  {
+    "brand": "FORD",
+    "fuel": "Gasóleo",
+    "count": 164
+  },
+  {
+    "brand": "FORD",
+    "fuel": "Elétrico (BEV)",
+    "count": 121
+  },
+  {
+    "brand": "FORD",
+    "fuel": "PHEV/Gasolina",
+    "count": 36
+  },
+  {
+    "brand": "FORD",
+    "fuel": "HEV/Gasolina",
+    "count": 254
+  },
+  {
+    "brand": "FORD - EDWARD DAVIES COMMERCIALS",
+    "fuel": "Gasóleo",
+    "count": 1
+  },
+  {
+    "brand": "FORTHING",
+    "fuel": "Gasolina",
+    "count": 1
+  },
+  {
+    "brand": "FORTHING",
+    "fuel": "Elétrico (BEV)",
+    "count": 1
+  },
+  {
+    "brand": "FORTHING",
+    "fuel": "HEV/Gasolina",
+    "count": 5
+  },
+  {
+    "brand": "FOTON",
+    "fuel": "Gasóleo",
+    "count": 3
+  },
+  {
+    "brand": "FOTON",
+    "fuel": "Elétrico (BEV)",
+    "count": 2
+  },
+  {
+    "brand": "FUSO",
+    "fuel": "Gasóleo",
+    "count": 31
+  },
+  {
+    "brand": "GOUPIL",
+    "fuel": "Elétrico (BEV)",
+    "count": 2
+  },
+  {
+    "brand": "HONDA",
+    "fuel": "Gasolina",
+    "count": 4
+  },
+  {
+    "brand": "HONDA",
+    "fuel": "Elétrico (BEV)",
+    "count": 1
+  },
+  {
+    "brand": "HONDA",
+    "fuel": "HEV/Gasolina",
+    "count": 68
+  },
+  {
+    "brand": "HYUNDAI",
+    "fuel": "Gasolina",
+    "count": 294
+  },
+  {
+    "brand": "HYUNDAI",
+    "fuel": "Elétrico (BEV)",
+    "count": 97
+  },
+  {
+    "brand": "HYUNDAI",
+    "fuel": "PHEV/Gasolina",
+    "count": 25
+  },
+  {
+    "brand": "HYUNDAI",
+    "fuel": "HEV/Gasolina",
+    "count": 48
+  },
+  {
+    "brand": "ISUZU",
+    "fuel": "Gasóleo",
+    "count": 56
+  },
+  {
+    "brand": "IVECO",
+    "fuel": "Gasóleo",
+    "count": 67
+  },
+  {
+    "brand": "IVECO",
+    "fuel": "Elétrico (BEV)",
+    "count": 1
+  },
+  {
+    "brand": "IVECO - CTE",
+    "fuel": "Gasóleo",
+    "count": 1
+  },
+  {
+    "brand": "IVECO - SOCAGE",
+    "fuel": "Gasóleo",
+    "count": 2
+  },
+  {
+    "brand": "IVECO-MULTITEL",
+    "fuel": "Gasóleo",
+    "count": 1
+  },
+  {
+    "brand": "JEEP",
+    "fuel": "Gasolina",
+    "count": 45
+  },
+  {
+    "brand": "JEEP",
+    "fuel": "Elétrico (BEV)",
+    "count": 47
+  },
+  {
+    "brand": "JEEP",
+    "fuel": "PHEV/Gasolina",
+    "count": 60
+  },
+  {
+    "brand": "JEEP",
+    "fuel": "HEV/Gasolina",
+    "count": 76
+  },
+  {
+    "brand": "KGM",
+    "fuel": "Gasolina",
+    "count": 7
+  },
+  {
+    "brand": "KGM",
+    "fuel": "Gasóleo",
+    "count": 20
+  },
+  {
+    "brand": "KGM",
+    "fuel": "Elétrico (BEV)",
+    "count": 36
+  },
+  {
+    "brand": "KIA",
+    "fuel": "Gasolina",
+    "count": 312
+  },
+  {
+    "brand": "KIA",
+    "fuel": "Elétrico (BEV)",
+    "count": 131
+  },
+  {
+    "brand": "KIA",
+    "fuel": "PHEV/Gasolina",
+    "count": 28
+  },
+  {
+    "brand": "KIA",
+    "fuel": "HEV/Gasolina",
+    "count": 37
+  },
+  {
+    "brand": "LAMBORGHINI",
+    "fuel": "PHEV/Gasolina",
+    "count": 2
+  },
+  {
+    "brand": "LAND ROVER",
+    "fuel": "PHEV/Gasolina",
+    "count": 76
+  },
+  {
+    "brand": "LAND ROVER",
+    "fuel": "HEV/Gasolina",
+    "count": 1
+  },
+  {
+    "brand": "LEAPMOTOR",
+    "fuel": "Elétrico (BEV)",
+    "count": 15
+  },
+  {
+    "brand": "LEAPMOTOR",
+    "fuel": "PHEV/Gasolina",
+    "count": 10
+  },
+  {
+    "brand": "LEXUS",
+    "fuel": "Elétrico (BEV)",
+    "count": 13
+  },
+  {
+    "brand": "LEXUS",
+    "fuel": "PHEV/Gasolina",
+    "count": 42
+  },
+  {
+    "brand": "LEXUS",
+    "fuel": "HEV/Gasolina",
+    "count": 18
+  },
+  {
+    "brand": "MAN",
+    "fuel": "Gasóleo",
+    "count": 15
+  },
+  {
+    "brand": "MASERATI",
+    "fuel": "HEV/Gasolina",
+    "count": 3
+  },
+  {
+    "brand": "MAXUS",
+    "fuel": "Gasóleo",
+    "count": 10
+  },
+  {
+    "brand": "MAXUS",
+    "fuel": "Elétrico (BEV)",
+    "count": 19
+  },
+  {
+    "brand": "MAZDA",
+    "fuel": "Gasolina",
+    "count": 6
+  },
+  {
+    "brand": "MAZDA",
+    "fuel": "Elétrico (BEV)",
+    "count": 14
+  },
+  {
+    "brand": "MAZDA",
+    "fuel": "PHEV/Gasolina",
+    "count": 2
+  },
+  {
+    "brand": "MAZDA",
+    "fuel": "HEV/Gasolina",
+    "count": 23
+  },
+  {
+    "brand": "MERCEDES-BENZ",
+    "fuel": "Gasolina",
+    "count": 2
+  },
+  {
+    "brand": "MERCEDES-BENZ",
+    "fuel": "Gasóleo",
+    "count": 327
+  },
+  {
+    "brand": "MERCEDES-BENZ",
+    "fuel": "Elétrico (BEV)",
+    "count": 234
+  },
+  {
+    "brand": "MERCEDES-BENZ",
+    "fuel": "PHEV/Gasolina",
+    "count": 561
+  },
+  {
+    "brand": "MERCEDES-BENZ",
+    "fuel": "HEV/Gasolina",
+    "count": 94
+  },
+  {
+    "brand": "MERCEDES-BENZ - AUTO RIBEIRO",
+    "fuel": "Gasóleo",
+    "count": 8
+  },
+  {
+    "brand": "MG",
+    "fuel": "Gasolina",
+    "count": 14
+  },
+  {
+    "brand": "MG",
+    "fuel": "Elétrico (BEV)",
+    "count": 108
+  },
+  {
+    "brand": "MG",
+    "fuel": "PHEV/Gasolina",
+    "count": 153
+  },
+  {
+    "brand": "MG",
+    "fuel": "HEV/Gasolina",
+    "count": 52
+  },
+  {
+    "brand": "MINI",
+    "fuel": "Gasolina",
+    "count": 38
+  },
+  {
+    "brand": "MINI",
+    "fuel": "Elétrico (BEV)",
+    "count": 166
+  },
+  {
+    "brand": "MINI",
+    "fuel": "HEV/Gasolina",
+    "count": 14
+  },
+  {
+    "brand": "MITSUBISHI",
+    "fuel": "Gasolina",
+    "count": 56
+  },
+  {
+    "brand": "MITSUBISHI",
+    "fuel": "PHEV/Gasolina",
+    "count": 23
+  },
+  {
+    "brand": "MITSUBISHI",
+    "fuel": "HEV/Gasolina",
+    "count": 22
+  },
+  {
+    "brand": "NISSAN",
+    "fuel": "Gasolina",
+    "count": 179
+  },
+  {
+    "brand": "NISSAN",
+    "fuel": "Gasóleo",
+    "count": 12
+  },
+  {
+    "brand": "NISSAN",
+    "fuel": "Elétrico (BEV)",
+    "count": 18
+  },
+  {
+    "brand": "NISSAN",
+    "fuel": "HEV/Gasolina",
+    "count": 401
+  },
+  {
+    "brand": "OPEL",
+    "fuel": "Gasolina",
+    "count": 209
+  },
+  {
+    "brand": "OPEL",
+    "fuel": "Gasóleo",
+    "count": 312
+  },
+  {
+    "brand": "OPEL",
+    "fuel": "Elétrico (BEV)",
+    "count": 64
+  },
+  {
+    "brand": "OPEL",
+    "fuel": "PHEV/Gasolina",
+    "count": 2
+  },
+  {
+    "brand": "OPEL",
+    "fuel": "HEV/Gasolina",
+    "count": 117
+  },
+  {
+    "brand": "PEUGEOT",
+    "fuel": "Gasolina",
+    "count": 349
+  },
+  {
+    "brand": "PEUGEOT",
+    "fuel": "Gasóleo",
+    "count": 706
+  },
+  {
+    "brand": "PEUGEOT",
+    "fuel": "Elétrico (BEV)",
+    "count": 358
+  },
+  {
+    "brand": "PEUGEOT",
+    "fuel": "PHEV/Gasolina",
+    "count": 67
+  },
+  {
+    "brand": "PEUGEOT",
+    "fuel": "HEV/Gasolina",
+    "count": 518
+  },
+  {
+    "brand": "PEUGEOT - AUTO RIBEIRO",
+    "fuel": "Gasóleo",
+    "count": 1
+  },
+  {
+    "brand": "POLESTAR",
+    "fuel": "Elétrico (BEV)",
+    "count": 75
+  },
+  {
+    "brand": "PORSCHE",
+    "fuel": "Gasolina",
+    "count": 13
+  },
+  {
+    "brand": "PORSCHE",
+    "fuel": "Gasóleo",
+    "count": 1
+  },
+  {
+    "brand": "PORSCHE",
+    "fuel": "Elétrico (BEV)",
+    "count": 50
+  },
+  {
+    "brand": "PORSCHE",
+    "fuel": "PHEV/Gasolina",
+    "count": 21
+  },
+  {
+    "brand": "PORSCHE",
+    "fuel": "HEV/Gasolina",
+    "count": 8
+  },
+  {
+    "brand": "RENAULT",
+    "fuel": "Gasolina",
+    "count": 70
+  },
+  {
+    "brand": "RENAULT",
+    "fuel": "Gasóleo",
+    "count": 422
+  },
+  {
+    "brand": "RENAULT",
+    "fuel": "Elétrico (BEV)",
+    "count": 351
+  },
+  {
+    "brand": "RENAULT",
+    "fuel": "PHEV/Gasolina",
+    "count": 36
+  },
+  {
+    "brand": "RENAULT",
+    "fuel": "HEV/Gasolina",
+    "count": 123
+  },
+  {
+    "brand": "SEAT",
+    "fuel": "Gasolina",
+    "count": 294
+  },
+  {
+    "brand": "SEAT",
+    "fuel": "Gasóleo",
+    "count": 61
+  },
+  {
+    "brand": "SEAT",
+    "fuel": "PHEV/Gasolina",
+    "count": 115
+  },
+  {
+    "brand": "SERES",
+    "fuel": "Elétrico (BEV)",
+    "count": 1
+  },
+  {
+    "brand": "SKODA",
+    "fuel": "Gasolina",
+    "count": 126
+  },
+  {
+    "brand": "SKODA",
+    "fuel": "Gasóleo",
+    "count": 129
+  },
+  {
+    "brand": "SKODA",
+    "fuel": "Elétrico (BEV)",
+    "count": 52
+  },
+  {
+    "brand": "SKODA",
+    "fuel": "PHEV/Gasolina",
+    "count": 65
+  },
+  {
+    "brand": "SKODA",
+    "fuel": "HEV/Gasolina",
+    "count": 8
+  },
+  {
+    "brand": "SMART",
+    "fuel": "Elétrico (BEV)",
+    "count": 46
+  },
+  {
+    "brand": "SUZUKI",
+    "fuel": "HEV/Gasolina",
+    "count": 14
+  },
+  {
+    "brand": "TESLA",
+    "fuel": "Elétrico (BEV)",
+    "count": 1204
+  },
+  {
+    "brand": "TOYOTA",
+    "fuel": "Gasolina",
+    "count": 50
+  },
+  {
+    "brand": "TOYOTA",
+    "fuel": "Gasóleo",
+    "count": 325
+  },
+  {
+    "brand": "TOYOTA",
+    "fuel": "Elétrico (BEV)",
+    "count": 126
+  },
+  {
+    "brand": "TOYOTA",
+    "fuel": "PHEV/Gasolina",
+    "count": 90
+  },
+  {
+    "brand": "TOYOTA",
+    "fuel": "HEV/Gasolina",
+    "count": 564
+  },
+  {
+    "brand": "VOLKSWAGEN",
+    "fuel": "Gasolina",
+    "count": 345
+  },
+  {
+    "brand": "VOLKSWAGEN",
+    "fuel": "Gasóleo",
+    "count": 254
+  },
+  {
+    "brand": "VOLKSWAGEN",
+    "fuel": "Elétrico (BEV)",
+    "count": 149
+  },
+  {
+    "brand": "VOLKSWAGEN",
+    "fuel": "PHEV/Gasolina",
+    "count": 239
+  },
+  {
+    "brand": "VOLKSWAGEN",
+    "fuel": "HEV/Gasolina",
+    "count": 39
+  },
+  {
+    "brand": "VOLKSWAGEN - AUTO RIBEIRO",
+    "fuel": "Gasóleo",
+    "count": 3
+  },
+  {
+    "brand": "VOLKSWAGEN - ZAGO AUTOMOTIVE",
+    "fuel": "Gasóleo",
+    "count": 15
+  },
+  {
+    "brand": "VOLVO",
+    "fuel": "Elétrico (BEV)",
+    "count": 209
+  },
+  {
+    "brand": "VOLVO",
+    "fuel": "PHEV/Gasolina",
+    "count": 173
+  },
+  {
+    "brand": "VOLVO",
+    "fuel": "HEV/Gasolina",
+    "count": 37
+  },
+  {
+    "brand": "VOYAH",
+    "fuel": "Elétrico (BEV)",
+    "count": 2
+  },
+  {
+    "brand": "XPENG",
+    "fuel": "Elétrico (BEV)",
+    "count": 102
+  }
+]

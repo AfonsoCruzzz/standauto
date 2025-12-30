@@ -13,10 +13,21 @@ model Car {
   id          String   @id @default(cuid())
   brand       String
   model       String
+  submodel    String?  
+  segment     String?  
   year        Int
   price       Float
   fuelType    String
   km          Int
+  
+  // --- NOVOS CAMPOS ---
+  transmission String   @default("Manual") // Tipo de Caixa
+  power        Int      @default(0)        // Potência (cv)
+  engineSize   Int      @default(0)        // Cilindrada (cm3)
+  condition    String   @default("Usado")  // Novo ou Usado
+  warranty     String?                     // Ex: "12 Meses", "3 Anos" ou null
+  // --------------------
+
   images      String[]
   description String?
   isAvailable Boolean  @default(true)

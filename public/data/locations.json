@@ -1,0 +1,119 @@
+[
+  {
+    "Municipio": "Matosinhos",
+    "PoderCompra": 119.64,
+    "Densidade": 2900.4,
+    "IdadeMedia": 45.53,
+    "Score_Poder": 0.7376988531261561,
+    "Score_Densidade": 1.0,
+    "Score": 84.3
+  },
+  {
+    "Municipio": "Porto",
+    "PoderCompra": 162.18,
+    "Densidade": 6100.6,
+    "IdadeMedia": 46.62,
+    "Score_Poder": 1.0,
+    "Score_Densidade": 0.6,
+    "Score": 84.0
+  },
+  {
+    "Municipio": "São João da Madeira",
+    "PoderCompra": 111.49,
+    "Densidade": 3053.8,
+    "IdadeMedia": 45.46,
+    "Score_Poder": 0.6874460476014305,
+    "Score_Densidade": 1.0,
+    "Score": 81.2
+  },
+  {
+    "Municipio": "Maia",
+    "PoderCompra": 107.3,
+    "Densidade": 1744.0,
+    "IdadeMedia": 43.6,
+    "Score_Poder": 0.6616105561721544,
+    "Score_Densidade": 1.0,
+    "Score": 79.7
+  },
+  {
+    "Municipio": "Vila Nova de Gaia",
+    "PoderCompra": 101.25,
+    "Densidade": 1857.9,
+    "IdadeMedia": 44.73,
+    "Score_Poder": 0.6243063263041065,
+    "Score_Densidade": 1.0,
+    "Score": 77.5
+  },
+  {
+    "Municipio": "Espinho",
+    "PoderCompra": 100.43,
+    "Densidade": 1554.4,
+    "IdadeMedia": 48.43,
+    "Score_Poder": 0.6192502158095943,
+    "Score_Densidade": 1.0,
+    "Score": 77.2
+  },
+  {
+    "Municipio": "Valongo",
+    "PoderCompra": 92.47,
+    "Densidade": 1350.7,
+    "IdadeMedia": 43.53,
+    "Score_Poder": 0.5701689480823776,
+    "Score_Densidade": 0.9004666666666667,
+    "Score": 70.2
+  },
+  {
+    "Municipio": "Gondomar",
+    "PoderCompra": 87.51,
+    "Densidade": 1284.0,
+    "IdadeMedia": 44.88,
+    "Score_Poder": 0.5395856455789864,
+    "Score_Densidade": 0.856,
+    "Score": 66.6
+  },
+  {
+    "Municipio": "Póvoa de Varzim",
+    "PoderCompra": 94.97,
+    "Densidade": 832.7,
+    "IdadeMedia": 43.97,
+    "Score_Poder": 0.5855839191022321,
+    "Score_Densidade": 0.5551333333333334,
+    "Score": 57.3
+  },
+  {
+    "Municipio": "Santa Maria da Feira",
+    "PoderCompra": 89.05,
+    "Densidade": 651.1,
+    "IdadeMedia": 44.8,
+    "Score_Poder": 0.5490812677272167,
+    "Score_Densidade": 0.43406666666666666,
+    "Score": 50.3
+  },
+  {
+    "Municipio": "Vila do Conde",
+    "PoderCompra": 94.1,
+    "Densidade": 576.2,
+    "IdadeMedia": 43.95,
+    "Score_Poder": 0.5802195091873227,
+    "Score_Densidade": 0.3841333333333334,
+    "Score": 50.2
+  },
+  {
+    "Municipio": "Trofa",
+    "PoderCompra": 92.55,
+    "Densidade": 559.6,
+    "IdadeMedia": 44.07,
+    "Score_Poder": 0.5706622271550129,
+    "Score_Densidade": 0.37306666666666666,
+    "Score": 49.2
+  },
+  {
+    "Municipio": "Santo Tirso",
+    "PoderCompra": 86.76,
+    "Densidade": 495.8,
+    "IdadeMedia": 46.83,
+    "Score_Poder": 0.5349611542730299,
+    "Score_Densidade": 0.33053333333333335,
+    "Score": 45.3
+  }
+]

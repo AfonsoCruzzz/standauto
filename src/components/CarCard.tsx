@@ -17,6 +17,8 @@ type CarProps = {
   fuelType: string;
   images: string[];
   isFeatured?: boolean;
+  createdAt: Date;
+  submodel?: string;
 };
 
 export default function CarCard({ car }: { car: CarProps }) {
@@ -53,7 +55,7 @@ export default function CarCard({ car }: { car: CarProps }) {
       <div className="relative h-48 w-full bg-gray-700">
         <Image
           src={imgSrc}
-          alt={`${car.brand} ${car.model}`}
+          alt={`${car.brand} ${car.model} ${car.submodel}`}
           fill // O fill faz a imagem ocupar o espaço todo do pai (h-48)
           className="object-cover" // Garante que a imagem não fica esticada
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
