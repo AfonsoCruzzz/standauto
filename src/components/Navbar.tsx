@@ -33,9 +33,9 @@ export default function Navbar() {
               
               <Link 
                 href="/admin/strategy" 
-                className="text-green-500 hover:text-green-400 font-medium transition flex items-center gap-1"
+                className="text-blue-500 hover:text-blue-400 font-medium transition"
               >
-                📊 Estratégia (SAD)
+                Estratégia (SAD)
               </Link>
             </>
           )}

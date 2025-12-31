@@ -2,7 +2,8 @@ import { prisma } from "@/../lib/prisma"; // Ajusta o import conforme o teu proj
 import { notFound } from "next/navigation";
 import CarGallery from "@/components/CarGallery";
 import ContactButton from "@/components/ContactButton";
-import { Calendar, Gauge, Fuel, Cog, CarFront, Zap, ShieldCheck, CheckCircle2, XCircle, LayoutGrid } from "lucide-react"; // Ícones (instala lucide-react se não tiveres)
+import { Calendar, Gauge, Fuel, Cog, CarFront, Zap, ShieldCheck, CheckCircle2, XCircle, LayoutGrid, DoorOpen, Paintbrush, Armchair } from "lucide-react"; // Ícones (instala lucide-react se não tiveres)
+import Link from "next/link";
 
 // Função para formatar preço
 const formatPrice = (price: number) => {
@@ -19,11 +20,19 @@ export default async function CarDetailsPage({ params }: { params: Promise<{ id:
     where: { id: id },
   });
 
-  if (!car) return notFound(); // Se o ID não existir, dá erro 404
+  if (!car) return notFound();
+
 
   return (
     <div className="bg-gray-950 min-h-screen text-white pb-20">
       <div className="container mx-auto px-4 py-8">
+
+        {/* Breadcrumb */}
+        <div className="text-sm text-gray-500 mb-6">
+          <Link href="/" className="hover:text-white">Home</Link> &gt; 
+          <Link href="/cars" className="hover:text-white ml-1">Carros</Link> &gt; 
+          <span className="text-blue-500 ml-1">{car.brand} {car.model}</span>
+        </div>
         
         {/* --- CABEÇALHO --- */}
         <div className="mb-6">
@@ -52,7 +61,7 @@ export default async function CarDetailsPage({ params }: { params: Promise<{ id:
 
              {/* INFO DE GARANTIA (SEGUROS) */}
              {car.warranty ? (
-              <div className="bg-green-900/20 border border-green-800 p-6 rounded-xl flex items-start gap-4">
+              <div className="bg-blue-900/20 border border-blue-800 p-4 rounded-lg flex items-center gap-3">
                 <ShieldCheck className="w-10 h-10 text-green-500 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-green-400 text-lg">Garantia Incluída</h3>
@@ -109,7 +118,10 @@ export default async function CarDetailsPage({ params }: { params: Promise<{ id:
                 <SpecItem icon={<Cog size={18}/>} label="Caixa" value={car.transmission} />
                 <SpecItem icon={<Zap size={18}/>} label="Potência" value={`${car.power} cv`} />
                 <SpecItem icon={<CarFront size={18}/>} label="Cilindrada" value={`${car.engineSize} cm³`} />
-                <SpecItem icon={<LayoutGrid size={18}/>} label="Segmento" value={car.segment} />               
+                <SpecItem icon={<LayoutGrid size={18}/>} label="Segmento" value={car.segment} />
+                <SpecItem icon={<DoorOpen size={18}/>} label="Portas" value={car.doors} />
+                <SpecItem icon={<Armchair size={18}/>} label="Lugares" value={car.seats} />
+                <SpecItem icon={<Paintbrush size={18}/>} label="Cor" value={car.color || "N/A"} />
 
               </div>
             </div>

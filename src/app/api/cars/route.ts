@@ -6,80 +6,87 @@ export const dynamic = 'force-dynamic'
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
-  const brand = searchParams.get("brand");
+  // Ler todos os parâmetros novos
+  const keyword = searchParams.get("keyword"); // Pesquisa texto
   const minPrice = searchParams.get("minPrice");
   const maxPrice = searchParams.get("maxPrice");
+  const minYear = searchParams.get("minYear");
+  const maxYear = searchParams.get("maxYear");
+  const maxKm = searchParams.get("maxKm");
+  const fuelType = searchParams.get("fuelType");
+  const transmission = searchParams.get("transmission");
   const featured = searchParams.get("featured");
+  const brand = searchParams.get("brand");
+  const model = searchParams.get("model");
+  const year = searchParams.get("year");
+  const submodel = searchParams.get("submodel");
+  const power = searchParams.get("power");
+  const engineSize = searchParams.get("engineSize");
+  const condition = searchParams.get("condition");
+  const warranty = searchParams.get("warranty");
 
-  // Construir o filtro dinamicamente
+  const segment = searchParams.get("segment");
+
   const whereClause: any = {
-    isAvailable: true, // Só mostra carros disponíveis
+    isAvailable: true,
   };
 
-  // 1. Filtro de Marca (Só adiciona se tiver texto escrito)
-  if (brand && brand.trim() !== "") {
-    whereClause.brand = { contains: brand, mode: "insensitive" };
+  // 1. Pesquisa Inteligente (Marca OU Modelo)
+  if (keyword && keyword.trim() !== "") {
+    whereClause.OR = [
+      { brand: { contains: keyword, mode: "insensitive" } },
+      { model: { contains: keyword, mode: "insensitive" } },
+    ];
   }
 
-  // 2. Filtro de Preço (Lógica "Blindada")
-  // Verifica se existe filtro de preço OU min OU max
+  // 2. Filtro de Preço
   if (minPrice || maxPrice) {
     whereClause.price = {};
-    
-    // Só adiciona se for um número válido
-    if (minPrice && !isNaN(parseFloat(minPrice))) {
-      whereClause.price.gte = parseFloat(minPrice); // gte = Greater Than or Equal (Maior ou igual)
-    }
-    
-    if (maxPrice && !isNaN(parseFloat(maxPrice))) {
-      whereClause.price.lte = parseFloat(maxPrice); // lte = Less Than or Equal (Menor ou igual)
-    }
+    if (minPrice) whereClause.price.gte = parseFloat(minPrice);
+    if (maxPrice) whereClause.price.lte = parseFloat(maxPrice);
   }
 
-  // 3. Filtro de Destaque (Homepage)
+  // 3. Filtro de Ano (NOVO)
+  if (minYear || maxYear) {
+    whereClause.year = {};
+    if (minYear) whereClause.year.gte = parseInt(minYear);
+    if (maxYear) whereClause.year.lte = parseInt(maxYear);
+  }
+
+  // 4. Filtro de KM (NOVO)
+  if (maxKm) {
+    whereClause.km = { lte: parseInt(maxKm) };
+  }
+
+  // 5. Combustível e Caixa (NOVO)
+  if (fuelType && fuelType !== "") {
+    whereClause.fuelType = fuelType;
+  }
+  
+  if (transmission && transmission !== "") {
+    whereClause.transmission = transmission;
+  }
+
+  // 6. Destaque
   if (featured === "true") {
     whereClause.isFeatured = true;
   }
 
+  if (segment && segment !== "") {
+    whereClause.segment = segment;
+  }
+  
   try {
     const cars = await prisma.car.findMany({
       where: whereClause,
       orderBy: { createdAt: "desc" },
     });
 
-    // IMPORTANTE: Adicionar headers para impedir cache nesta rota de API
     return NextResponse.json(cars, {
-      headers: {
-        "Cache-Control": "no-store, max-age=0",
-      },
+      headers: { "Cache-Control": "no-store, max-age=0" },
     });
   } catch (error) {
-    console.error("Erro na API cars:", error);
+    console.error("Erro API:", error);
     return NextResponse.json({ message: "Erro ao buscar carros" }, { status: 500 });
-  }
-}
-
-export async function POST(request: Request) {
-  try {
-    const body = await request.json()
-
-    // Validação básica para evitar erros se o body vier vazio
-    if (!body || Object.keys(body).length === 0) {
-      return NextResponse.json(
-        { error: 'Request body cannot be empty' },
-        { status: 400 }
-      )
-    }
-
-    const car = await prisma.car.create({
-      data: body
-    })
-    return NextResponse.json(car)
-  } catch (error) {
-    console.error('Error creating car:', error)
-    return NextResponse.json(
-      { error: 'Error creating car' },
-      { status: 500 }
-    )
   }
 }

@@ -21,7 +21,7 @@ export default function ContactButton({ carTitle }: { carTitle: string }) {
       onClick={handleContact}
       className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl text-lg transition shadow-lg flex items-center justify-center gap-2"
     >
-      📩 Contactar Vendedor
+      Tenho Interesse / Agendar Test-Drive
     </button>
   );
 }

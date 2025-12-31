@@ -18,7 +18,14 @@ type CarProps = {
   images: string[];
   isFeatured?: boolean;
   createdAt: Date;
-  submodel?: string;
+  submodel?: string | null; 
+  segment?: string | null;
+  transmission?: string | null;
+  power?: number | null;
+  doors?: number | null;
+  seats?: number | null;
+  warranty?: string | null;
+  color?: string | null;
 };
 
 export default function CarCard({ car }: { car: CarProps }) {
