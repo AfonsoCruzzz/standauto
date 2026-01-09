@@ -1,8 +1,14 @@
-import { prisma } from "@/../lib/prisma"; // Ajusta o import conforme o teu projeto
+import { prisma } from "@/../lib/prisma"; // Certifica-te que o caminho está certo (ex: @/lib/prisma ou @/../lib/prisma)
 import { notFound } from "next/navigation";
 import CarGallery from "@/components/CarGallery";
 import ContactButton from "@/components/ContactButton";
-import { Calendar, Gauge, Fuel, Cog, CarFront, Zap, ShieldCheck, CheckCircle2, XCircle, LayoutGrid, DoorOpen, Paintbrush, Armchair } from "lucide-react"; // Ícones (instala lucide-react se não tiveres)
+import AdminCarControls from "@/components/AdminCarControls"; // <--- O componente que criaste no passo anterior
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/auth"; // <--- Confirma se o teu ficheiro auth.ts está aqui
+import { 
+  Calendar, Gauge, Fuel, Cog, CarFront, Zap, ShieldCheck, 
+  CheckCircle2, XCircle, LayoutGrid, DoorOpen, Paintbrush, Armchair 
+} from "lucide-react";
 import Link from "next/link";
 
 // Função para formatar preço
@@ -10,136 +16,150 @@ const formatPrice = (price: number) => {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(price);
 };
 
+// Componente auxiliar para os itens da grelha (Mantive o teu design)
+function SpecItem({ icon, label, value }: any) {
+  return (
+    <div className="flex flex-col gap-1 p-3 bg-gray-900/50 rounded-lg border border-gray-800 hover:border-gray-700 transition">
+      <div className="flex items-center gap-2 text-gray-400 text-xs uppercase font-bold tracking-wider">
+        <span className="text-blue-500">{icon}</span>
+        {label}
+      </div>
+      <div className="text-white font-medium pl-6 text-sm md:text-base truncate">
+        {value || "N/A"}
+      </div>
+    </div>
+  );
+}
+
 export default async function CarDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   
-  // 2. Faz o await dos params antes de usar!
+  // 1. Obter dados da sessão (para saber se é ADMIN)
+  const session = await getServerSession(authOptions);
+  const isAdmin = session?.user?.role === "ADMIN";
+
+  // 2. Resolver os parâmetros (Next.js 15)
   const { id } = await params; 
 
-  // 3. Agora já podes usar o "id" no prisma
+  // 3. Buscar o carro à BD
   const car = await prisma.car.findUnique({
     where: { id: id },
   });
 
   if (!car) return notFound();
 
-
   return (
     <div className="bg-gray-950 min-h-screen text-white pb-20">
       <div className="container mx-auto px-4 py-8">
 
         {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-6">
-          <Link href="/" className="hover:text-white">Home</Link> &gt; 
-          <Link href="/cars" className="hover:text-white ml-1">Carros</Link> &gt; 
-          <span className="text-blue-500 ml-1">{car.brand} {car.model}</span>
-        </div>
-        
-        {/* --- CABEÇALHO --- */}
-        <div className="mb-6">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                {car.brand} {car.model} <span className="text-gray-500 text-2xl">{car.submodel}</span>
-            </h1>
-          <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-            <span className="bg-gray-800 px-3 py-1 rounded-full text-white">{car.condition}</span>
-            <span>Ref: {car.id.slice(0, 8)}</span>
-            <span>Publicado a: {new Date(car.createdAt).toLocaleDateString('pt-PT')}</span>
-          </div>
+        <div className="text-sm text-gray-500 mb-6 flex items-center gap-2">
+          <Link href="/" className="hover:text-white transition">Home</Link> &gt; 
+          <Link href="/cars" className="hover:text-white transition">Carros</Link> &gt; 
+          <span className="text-blue-500 font-medium truncate">{car.brand} {car.model}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           
-          {/* --- COLUNA ESQUERDA: GALERIA E DESCRIÇÃO (2/3) --- */}
-          <div className="lg:col-span-2 space-y-8">
-            <CarGallery images={car.images} title={`${car.brand} ${car.model}`} />
-            
-            <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
-              <h2 className="text-xl font-bold mb-4 border-b border-gray-700 pb-2">Sobre este veículo</h2>
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">
-                {car.description || "Sem descrição disponível."}
-              </p>
-            </div>
-
-             {/* INFO DE GARANTIA (SEGUROS) */}
-             {car.warranty ? (
-              <div className="bg-blue-900/20 border border-blue-800 p-4 rounded-lg flex items-center gap-3">
-                <ShieldCheck className="w-10 h-10 text-green-500 flex-shrink-0" />
-                <div>
-                  <h3 className="font-bold text-green-400 text-lg">Garantia Incluída</h3>
-                  <p className="text-gray-300">Este veículo inclui um pacote de garantia de: <span className="text-white font-bold">{car.warranty}</span>.</p>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-gray-900 border border-gray-800 p-6 rounded-xl flex items-start gap-4 opacity-70">
-                <ShieldCheck className="w-10 h-10 text-gray-500 flex-shrink-0" />
-                <div>
-                  <h3 className="font-bold text-gray-400">Sem Garantia Extra</h3>
-                  <p className="text-sm text-gray-500">Vendido no estado em que se encontra ou sob consulta.</p>
-                </div>
+          {/* --- COLUNA DA ESQUERDA: GALERIA --- */}
+          <div className="relative">
+            {/* Overlay de VENDIDO (Fita vermelha) */}
+            {!car.isAvailable && (
+              <div className="absolute top-6 left-0 z-20 bg-red-600 text-white font-bold px-8 py-2 text-xl shadow-lg transform -rotate-6 border-y-2 border-white/20 backdrop-blur-sm">
+                VENDIDO
               </div>
             )}
+            
+            {/* Galeria de Imagens */}
+            <CarGallery images={car.images} title={`${car.brand} ${car.model}`} />
           </div>
 
-          {/* --- COLUNA DIREITA: PREÇO E ESPECIFICAÇÕES (1/3) --- */}
-          <div className="space-y-6">
-            
-            {/* CARD DE PREÇO */}
-            <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 sticky top-4">
-              <div className="mb-6">
-                <p className="text-sm text-gray-400">Preço de Venda</p>
-                <div className="text-4xl font-bold text-blue-500">{formatPrice(car.price)}</div>
+          {/* --- COLUNA DA DIREITA: INFORMAÇÕES --- */}
+          <div className="space-y-8">
+
+            {/* PAINEL DE ADMIN (Só aparece se for ADMIN) */}
+            {isAdmin && (
+               <AdminCarControls carId={car.id} isAvailable={car.isAvailable} />
+            )}
+
+            {/* Cabeçalho do Carro */}
+            <div>
+              <div className="flex items-center justify-between">
+                <h1 className="text-4xl font-bold mb-2 tracking-tight">{car.brand} {car.model}</h1>
+                
+                {/* Badge de Disponibilidade */}
+                {car.isAvailable ? (
+                    <span className="flex items-center gap-1 text-green-400 bg-green-900/30 px-3 py-1 rounded-full text-xs font-bold border border-green-800">
+                        <CheckCircle2 size={14} /> DISPONÍVEL
+                    </span>
+                ) : (
+                    <span className="flex items-center gap-1 text-red-400 bg-red-900/30 px-3 py-1 rounded-full text-xs font-bold border border-red-800">
+                        <XCircle size={14} /> VENDIDO
+                    </span>
+                )}
               </div>
 
-              <div className="space-y-3 mb-6">
-                <div className="flex justify-between p-3 bg-gray-800 rounded">
-                  <span className="text-gray-400 flex items-center gap-2"><CheckCircle2 size={16}/> Disponibilidade</span>
-                  {car.isAvailable ? (
-                    <span className="text-green-400 font-bold">Disponível</span>
-                  ) : (
-                    <span className="text-red-400 font-bold">Vendido</span>
-                  )}
-                </div>
-              </div>
-
-              <ContactButton carTitle={`${car.brand} ${car.model}`} />
+              <p className="text-xl text-gray-400 font-light">{car.submodel}</p>
               
-              <p className="text-xs text-center text-gray-500 mt-4">
-                Necessário login para contactar.
-              </p>
+              <div className="mt-4 text-4xl font-bold text-blue-500 tracking-tight">
+                {formatPrice(car.price)}
+              </div>
             </div>
 
-            {/* GRELHA DE ESPECIFICAÇÕES TÉCNICAS */}
-            <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
-              <h3 className="font-bold text-lg mb-4">Caraterísticas</h3>
-              <div className="grid grid-cols-2 gap-4">
-                
-                <SpecItem icon={<Calendar size={18}/>} label="Ano" value={car.year} />
-                <SpecItem icon={<Gauge size={18}/>} label="Quilómetros" value={`${car.km.toLocaleString()} km`} />
-                <SpecItem icon={<Fuel size={18}/>} label="Combustível" value={car.fuelType} />
-                <SpecItem icon={<Cog size={18}/>} label="Caixa" value={car.transmission} />
-                <SpecItem icon={<Zap size={18}/>} label="Potência" value={`${car.power} cv`} />
-                <SpecItem icon={<CarFront size={18}/>} label="Cilindrada" value={`${car.engineSize} cm³`} />
-                <SpecItem icon={<LayoutGrid size={18}/>} label="Segmento" value={car.segment} />
-                <SpecItem icon={<DoorOpen size={18}/>} label="Portas" value={car.doors} />
-                <SpecItem icon={<Armchair size={18}/>} label="Lugares" value={car.seats} />
-                <SpecItem icon={<Paintbrush size={18}/>} label="Cor" value={car.color || "N/A"} />
-
+            {/* Grelha de Especificações (Com os teus ícones) */}
+            <div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-800 backdrop-blur-sm">
+              <h3 className="text-lg font-bold mb-4 border-b border-gray-800 pb-2 flex items-center gap-2">
+                <Cog className="text-blue-500" size={20} /> Especificações
+              </h3>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <SpecItem icon={<Calendar size={16}/>} label="Ano" value={car.year} />
+                <SpecItem icon={<Gauge size={16}/>} label="Quilómetros" value={`${car.km.toLocaleString()} km`} />
+                <SpecItem icon={<Fuel size={16}/>} label="Combustível" value={car.fuelType} />
+                <SpecItem icon={<Cog size={16}/>} label="Caixa" value={car.transmission} />
+                <SpecItem icon={<Zap size={16}/>} label="Potência" value={car.power ? `${car.power} cv` : "N/A"} />
+                <SpecItem icon={<CarFront size={16}/>} label="Cilindrada" value={car.engineSize ? `${car.engineSize} cm³` : "N/A"} />
+                <SpecItem icon={<LayoutGrid size={16}/>} label="Segmento" value={car.segment} />
               </div>
+            </div>
+
+            {/* Garantia (Destaque) */}
+            <div className="bg-blue-900/10 border border-blue-800/50 p-4 rounded-xl flex items-center gap-4">
+              <div className="p-3 bg-blue-500/10 rounded-full text-blue-400">
+                <ShieldCheck size={32} />
+              </div>
+              <div>
+                <p className="text-xs text-blue-300 font-bold uppercase tracking-wide">Garantia Incluída</p>
+                <p className="text-lg font-bold text-white">{car.warranty || "Sob Consulta"}</p>
+              </div>
+            </div>
+
+            {/* Descrição */}
+            {car.description && (
+              <div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-800">
+                <h3 className="text-lg font-bold mb-3 text-gray-200">Sobre esta viatura</h3>
+                <p className="text-gray-400 leading-relaxed whitespace-pre-line text-sm md:text-base">
+                  {car.description}
+                </p>
+              </div>
+            )}
+
+            {/* Botão de Ação (Condicional: Contacto ou Vendido) */}
+            <div className="pt-4">
+              {car.isAvailable ? (
+                // Se disponível, mostra o teu botão de contacto original
+                <ContactButton carTitle={`${car.brand} ${car.model}`} />
+              ) : (
+                // Se vendido, mostra botão desativado
+                <button disabled className="w-full bg-gray-800 text-gray-500 font-bold py-4 rounded-xl cursor-not-allowed text-lg border border-gray-700 flex items-center justify-center gap-2 hover:bg-gray-800 opacity-70">
+                  <XCircle size={24} />
+                  Veículo Indisponível
+                </button>
+              )}
             </div>
 
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-// Componente Pequeno para os items da grelha
-function SpecItem({ icon, label, value }: any) {
-  return (
-    <div className="flex flex-col gap-1 p-2 bg-gray-950/50 rounded border border-gray-800">
-      <div className="text-blue-500 mb-1">{icon}</div>
-      <span className="text-xs text-gray-500 uppercase">{label}</span>
-      <span className="font-bold text-white text-sm truncate">{value}</span>
     </div>
   );
 }

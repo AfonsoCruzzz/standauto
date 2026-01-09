@@ -27,9 +27,20 @@ export async function GET(req: Request) {
 
   const segment = searchParams.get("segment");
 
-  const whereClause: any = {
-    isAvailable: true,
-  };
+  const status = searchParams.get("status");
+
+  const whereClause: any = {};
+
+  if (status === "sold") {
+    // Se o filtro for "sold", queremos só os vendidos
+    whereClause.isAvailable = false;
+  } else if (status === "all") {
+    // Se for "all", não metemos filtro nenhum (mostra disponíveis e vendidos)
+    // (Não fazemos nada aqui, o whereClause fica sem isAvailable)
+  } else {
+    // Comportamento Padrão: Só mostrar disponíveis
+    whereClause.isAvailable = true;
+  }
 
   // 1. Pesquisa Inteligente (Marca OU Modelo)
   if (keyword && keyword.trim() !== "") {

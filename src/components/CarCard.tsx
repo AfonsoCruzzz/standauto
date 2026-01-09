@@ -80,7 +80,7 @@ export default function CarCard({ car }: { car: CarProps }) {
               className="absolute top-2 right-2 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white z-10 transition"
               title={isFeatured ? "Remover da Home" : "Adicionar à Home"}
             >
-              {isFeatured ? "⭐" : "☆"} 
+              {isFeatured ? "★" : "☆"} 
             </button>
           )}
       </div>

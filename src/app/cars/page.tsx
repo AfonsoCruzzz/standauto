@@ -23,6 +23,7 @@ function CarsListContent() {
     fuelType: searchParams.get("fuelType") || "",
     transmission: searchParams.get("transmission") || "",
     segment: searchParams.get("segment") || "", // <--- Lê o segmento do link da Home
+    status: searchParams.get("status") || "available",
   };
 
   const fetchCars = async (filtersToUse: FilterState) => {

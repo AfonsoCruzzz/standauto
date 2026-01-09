@@ -13,6 +13,7 @@ export type FilterState = {
   fuelType: string;
   transmission: string;
   segment: string;
+  status: string;
 };
 
 interface CarFiltersProps {
@@ -33,6 +34,7 @@ export default function CarFilters({ onFilter, loading }: CarFiltersProps) {
     fuelType: "",
     transmission: "",
     segment: "",
+    status: "available",
   };
 
   const [filters, setFilters] = useState<FilterState>(initialFilters);
@@ -77,6 +79,20 @@ export default function CarFilters({ onFilter, loading }: CarFiltersProps) {
             onChange={handleChange}
             className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm focus:border-blue-500 transition"
           />
+        </div>
+
+        <div>
+        <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Estado</label>
+          <select 
+              name="status" 
+              value={filters.status} 
+              onChange={handleChange} 
+              className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm focus:border-blue-500"
+          >
+              <option value="available">Disponíveis (Padrão)</option>
+              <option value="sold">Vendidos</option>
+              <option value="all">Todos (Histórico)</option>
+          </select>
         </div>
 
         {/* Preço */}
