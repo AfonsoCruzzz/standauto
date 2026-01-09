@@ -12,7 +12,7 @@ export default function Navbar() {
         
         {/* Logo / Home */}
         <Link href="/" className="text-xl font-bold text-blue-500 hover:text-blue-400">
-          Stand Automóvel
+          STANDECIDE
         </Link>
 
         <div className="flex items-center gap-6">
