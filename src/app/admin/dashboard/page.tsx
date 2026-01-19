@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"; // Confirma o caminho
+import { prisma } from "@/../lib/prisma"; // Confirma o caminho
 import { DollarSign, Car, TrendingUp, PlusCircle, ArrowRight } from "lucide-react";
 import DashboardChart from "@/components/DashboardChart"; 
 import Link from "next/link";
