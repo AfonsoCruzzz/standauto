@@ -24,7 +24,7 @@ export async function PATCH(
     // Antes estavas a fazer: const { isFeatured } = await req.json();
     // Isso ignorava o "isAvailable". Agora lemos o corpo todo:
     const body = await req.json(); 
-
+    router.refresh();
     const updatedCar = await prisma.car.update({
       where: { id },
       data: body, // ✅ Agora aceita { isFeatured: true } OU { isAvailable: false }
@@ -35,7 +35,6 @@ export async function PATCH(
     console.error("Erro no PATCH:", error);
     return NextResponse.json({ message: "Erro ao atualizar carro" }, { status: 500 });
   }
-  router.refresh();
 }
 
 // --- DELETE: Apagar Carro Definitivamente ---
