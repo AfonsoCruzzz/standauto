@@ -38,11 +38,11 @@ export default async function AdminDashboard() {
         _count: { brand: true },
         where: { isAvailable: true },
         orderBy: { _count: { brand: 'desc' } },
-        take: 6,
+        take: 6
     })
   ]);
 
-  const stockValue = totalValue._sum?.price ?? 0;
+  const stockValue = totalValue._sum.price || 0;
   const averagePrice = totalCars > 0 ? stockValue / totalCars : 0;
 
   return (
