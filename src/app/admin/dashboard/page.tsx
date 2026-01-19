@@ -1,152 +1,165 @@
-import { prisma } from "@/../lib/prisma"; // Confirma o caminho
-import { DollarSign, Car, TrendingUp, PlusCircle, ArrowRight } from "lucide-react";
-import DashboardChart from "@/components/DashboardChart"; 
+import { prisma } from "@/../lib/prisma"; // Confirma se o caminho está certo
 import Link from "next/link";
+import { DollarSign, Car, TrendingUp, PlusCircle, ArrowRight } from "lucide-react";
+import DashboardChart from "@/components/DashboardChart"; // O componente que criaste acima
 
-// Força a página a ser gerada no servidor a cada pedido
-export const dynamic = 'force-dynamic';
-
-// Função auxiliar segura para formatar dinheiro
-const formatCurrency = (value: number | null | undefined) => {
-  if (value === null || value === undefined) return "0,00 €";
+// Função auxiliar para formatar dinheiro
+const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(value);
 };
 
 export default async function AdminDashboard() {
-  try {
-    // --- 1. BUSCAR DADOS (Queries em Paralelo) ---
-    const [totalCars, totalValueData, soldCars, recentCars, brandStats] = await Promise.all([
-      // A. Contar Disponíveis
-      prisma.car.count({ where: { isAvailable: true } }),
+  // --- 1. BUSCAR DADOS (QUERIES PARALELAS PARA RAPIDEZ) ---
+  const [totalCars, totalValue, soldCars, recentCars, brandStats] = await Promise.all([
+    // Contar carros disponíveis
+    prisma.car.count({ where: { isAvailable: true } }),
+    
+    // Somar o valor total do stock (soma dos preços)
+    prisma.car.aggregate({
+      _sum: { price: true },
+      where: { isAvailable: true }
+    }),
+
+    // Contar carros vendidos (não disponíveis)
+    prisma.car.count({ where: { isAvailable: false } }),
+
+    // Buscar os 5 últimos carros adicionados
+    prisma.car.findMany({
+      take: 5,
+      orderBy: { createdAt: 'desc' },
+      select: { id: true, brand: true, model: true, price: true, isAvailable: true, createdAt: true }
+    }),
+
+    // Agrupar por marca para o gráfico
+    prisma.car.groupBy({
+      by: ['brand'],
+      _count: true,
+      orderBy: {
+        _count: {
+          brand: 'desc'
+        }
+      },
+      take: 6 // Top 6 marcas
+    })
+  ]);
+
+  const stockValue = totalValue._sum.price || 0;
+  const averagePrice = totalCars > 0 ? stockValue / totalCars : 0;
+
+  return (
+    <div className="p-8 bg-gray-950 min-h-screen text-white pb-20">
       
-      // B. Somar Valor (Aggregate)
-      prisma.car.aggregate({
-        _sum: { price: true },
-        where: { isAvailable: true }
-      }),
+      {/* CABEÇALHO */}
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-white">Painel de Controlo</h1>
+          <p className="text-gray-400">Visão geral do teu Stand Automóvel.</p>
+        </div>
+        <Link 
+          href="/admin/cars/new" 
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold transition"
+        >
+          <PlusCircle size={20} />
+          Adicionar Viatura
+        </Link>
+      </div>
 
-      // C. Contar Vendidos
-      prisma.car.count({ where: { isAvailable: false } }),
-
-      // D. Recentes (Top 5)
-      prisma.car.findMany({
-        take: 5,
-        orderBy: { createdAt: 'desc' },
-        select: { id: true, brand: true, model: true, price: true, isAvailable: true, createdAt: true }
-      }),
-
-      // E. Estatísticas por Marca (Top 6)
-      prisma.car.groupBy({
-        by: ['brand'],
-        _count: { brand: true },
-        where: { isAvailable: true },
-        orderBy: { _count: { brand: 'desc' } },
-        take: 6,
-      })
-    ]);
-
-    // --- 2. TRATAMENTO SEGURO DOS DADOS ---
-    // O uso de "?." e "??" evita que o site vá abaixo se vier null
-    const totalStockValue = totalValueData._sum?.price ?? 0;
-
-    // --- 3. RENDERIZAÇÃO (HTML) ---
-    return (
-      <div className="text-white">
-        <h1 className="text-3xl font-bold mb-8">Dashboard Geral</h1>
+      {/* --- GRID DE KPIs (INDICADORES) --- */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         
-        {/* CARDS DE ESTATÍSTICAS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          
-          {/* Card 1: Total Carros */}
-          <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 flex items-center justify-between">
+        {/* KPI 1: Valor em Stock */}
+        <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 shadow-lg">
+          <div className="flex justify-between items-start">
             <div>
-              <p className="text-gray-400 text-sm font-bold uppercase">Em Stock</p>
-              <p className="text-3xl font-bold mt-1">{totalCars}</p>
+              <p className="text-sm text-gray-400 font-medium">Valor em Stock</p>
+              <h3 className="text-2xl font-bold text-white mt-1">{formatCurrency(stockValue)}</h3>
             </div>
-            <div className="p-4 bg-blue-600/20 text-blue-500 rounded-full">
-              <Car size={32} />
-            </div>
-          </div>
-
-          {/* Card 2: Valor do Stock */}
-          <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 flex items-center justify-between">
-            <div>
-              <p className="text-gray-400 text-sm font-bold uppercase">Valor do Stock</p>
-              <p className="text-3xl font-bold mt-1 text-green-400">
-                {formatCurrency(totalStockValue)}
-              </p>
-            </div>
-            <div className="p-4 bg-green-600/20 text-green-500 rounded-full">
-              <DollarSign size={32} />
-            </div>
-          </div>
-
-          {/* Card 3: Carros Vendidos */}
-          <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 flex items-center justify-between">
-            <div>
-              <p className="text-gray-400 text-sm font-bold uppercase">Vendidos</p>
-              <p className="text-3xl font-bold mt-1 text-yellow-400">{soldCars}</p>
-            </div>
-            <div className="p-4 bg-yellow-600/20 text-yellow-500 rounded-full">
-              <TrendingUp size={32} />
+            <div className="p-2 bg-green-500/20 rounded-lg text-green-500">
+              <DollarSign size={24} />
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          {/* TABELA DE RECENTES */}
-          <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
-            <div className="p-6 border-b border-gray-700 flex justify-between items-center">
-              <h2 className="font-bold text-lg">Últimas Entradas</h2>
-              <Link href="/admin/add" className="text-sm bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded flex items-center gap-2 transition">
-                <PlusCircle size={16} /> Novo
-              </Link>
+        {/* KPI 2: Total de Carros */}
+        <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 shadow-lg">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-sm text-gray-400 font-medium">Viaturas Disponíveis</p>
+              <h3 className="text-2xl font-bold text-white mt-1">{totalCars}</h3>
             </div>
-            <div className="p-4">
-              {recentCars.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">Sem carros recentes.</p>
-              ) : (
-                <div className="space-y-3">
-                  {recentCars.map((car) => (
-                    <div key={car.id} className="flex justify-between items-center p-3 hover:bg-gray-700/50 rounded-lg transition">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-2 h-2 rounded-full ${car.isAvailable ? 'bg-green-500' : 'bg-red-500'}`} />
-                        <div>
-                          <p className="font-bold text-sm">{car.brand} {car.model}</p>
-                          <p className="text-xs text-gray-400">{formatCurrency(car.price)}</p>
-                        </div>
-                      </div>
-                      <Link href={`/cars/${car.id}`} className="text-gray-400 hover:text-white">
-                        <ArrowRight size={18} />
-                      </Link>
-                    </div>
-                  ))}
+            <div className="p-2 bg-blue-500/20 rounded-lg text-blue-500">
+              <Car size={24} />
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 3: Vendas (Indisponíveis) */}
+        <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 shadow-lg">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-sm text-gray-400 font-medium">Viaturas Vendidas</p>
+              <h3 className="text-2xl font-bold text-white mt-1">{soldCars}</h3>
+            </div>
+            <div className="p-2 bg-purple-500/20 rounded-lg text-purple-500">
+              <TrendingUp size={24} />
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 4: Preço Médio */}
+        <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 shadow-lg">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-sm text-gray-400 font-medium">Preço Médio</p>
+              <h3 className="text-2xl font-bold text-white mt-1">{formatCurrency(averagePrice)}</h3>
+            </div>
+            <div className="p-2 bg-orange-500/20 rounded-lg text-orange-500">
+              <DollarSign size={24} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* --- GRÁFICO (ESQUERDA - 2/3) --- */}
+        <div className="lg:col-span-2 bg-gray-900 p-6 rounded-xl border border-gray-800 shadow-lg">
+          <h3 className="text-lg font-bold text-white mb-6">Distribuição de Stock por Marca</h3>
+          <DashboardChart data={brandStats} />
+        </div>
+
+        {/* --- ATIVIDADE RECENTE (DIREITA - 1/3) --- */}
+        <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 shadow-lg">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-bold text-white">Adicionados Recentemente</h3>
+            <Link href="/cars" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1">
+              Ver todos <ArrowRight size={14} />
+            </Link>
+          </div>
+          
+          <div className="space-y-4">
+            {recentCars.map((car) => (
+              <div key={car.id} className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition">
+                <div>
+                  <p className="font-bold text-white text-sm">{car.brand} {car.model}</p>
+                  <p className="text-xs text-gray-400">{new Date(car.createdAt).toLocaleDateString('pt-PT')}</p>
                 </div>
-              )}
-            </div>
-          </div>
-
-          {/* GRÁFICO (Chart) */}
-          <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
-            <h2 className="font-bold text-lg mb-6">Stock por Marca</h2>
-            <div className="h-64">
-               {/* Passamos os dados tratados para o componente do gráfico */}
-               <DashboardChart data={brandStats.map(b => ({ name: b.brand, value: b._count.brand }))} />
-            </div>
+                <div className="text-right">
+                  <p className="font-bold text-blue-400 text-sm">{formatCurrency(car.price)}</p>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${car.isAvailable ? 'bg-green-900 text-green-200' : 'bg-red-900 text-red-200'}`}>
+                    {car.isAvailable ? 'Stock' : 'Vendido'}
+                  </span>
+                </div>
+              </div>
+            ))}
+            
+            {recentCars.length === 0 && (
+              <p className="text-gray-500 text-sm text-center py-4">Ainda não tens carros registados.</p>
+            )}
           </div>
         </div>
-      </div>
-    );
 
-  } catch (error) {
-    console.error("❌ Erro fatal no Dashboard:", error);
-    // UI de Erro (para o site não ir abaixo completamente)
-    return (
-      <div className="p-10 text-center text-red-400 bg-gray-900 rounded-xl border border-red-900">
-        <h2 className="text-xl font-bold mb-2">Erro ao carregar Dashboard</h2>
-        <p>Verifique a ligação à base de dados.</p>
       </div>
-    );
-  }
+    </div>
+  );
 }
