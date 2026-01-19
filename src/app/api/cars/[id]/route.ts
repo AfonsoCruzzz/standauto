@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/../lib/prisma"; // Confirma se este import está a funcionar, ou usa o teu relativo
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/auth"; // Confirma se este import está a funcionar
+import { useRouter } from "next/navigation";
 
 // --- PATCH: Serve para VENDER (isAvailable) e para DESTACAR (isFeatured) ---
 export async function PATCH(
@@ -34,6 +35,7 @@ export async function PATCH(
     console.error("Erro no PATCH:", error);
     return NextResponse.json({ message: "Erro ao atualizar carro" }, { status: 500 });
   }
+  router.refresh();
 }
 
 // --- DELETE: Apagar Carro Definitivamente ---
