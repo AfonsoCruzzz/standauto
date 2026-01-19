@@ -3,6 +3,8 @@ import Link from "next/link";
 import { DollarSign, Car, TrendingUp, PlusCircle, ArrowRight } from "lucide-react";
 import DashboardChart from "@/components/DashboardChart"; // O componente que criaste acima
 
+export const dynamic = 'force-dynamic';
+
 // Função auxiliar para formatar dinheiro
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(value);
@@ -32,18 +34,15 @@ export default async function AdminDashboard() {
 
     // Agrupar por marca para o gráfico
     prisma.car.groupBy({
-      by: ['brand'],
-      _count: true,
-      orderBy: {
-        _count: {
-          brand: 'desc'
-        }
-      },
-      take: 6 // Top 6 marcas
+        by: ['brand'],
+        _count: { brand: true },
+        where: { isAvailable: true },
+        orderBy: { _count: { brand: 'desc' } },
+        take: 6,
     })
   ]);
 
-  const stockValue = totalValue._sum.price || 0;
+  const stockValue = totalValue._sum?.price ?? 0;
   const averagePrice = totalCars > 0 ? stockValue / totalCars : 0;
 
   return (
