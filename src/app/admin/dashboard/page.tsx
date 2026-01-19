@@ -33,7 +33,7 @@ export default async function AdminDashboard() {
     }),
 
     // Agrupar por marca para o gráfico
-    const brandStats = await prisma.car.groupBy({
+    prisma.car.groupBy({
       by: ['brand'],
       _count: { brand: true }, // ou _count: true
       where: { isAvailable: true },
