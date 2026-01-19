@@ -35,7 +35,7 @@ export default async function AdminDashboard() {
     // Agrupar por marca para o gráfico
     prisma.car.groupBy({
         by: ['brand'],
-        _count: { brand: true },
+        _count: true,
         where: { isAvailable: true },
         orderBy: { _count: { brand: 'desc' } },
         take: 6
