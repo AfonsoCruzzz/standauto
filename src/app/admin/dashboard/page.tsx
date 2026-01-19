@@ -35,11 +35,12 @@ export default async function AdminDashboard() {
     // Agrupar por marca para o gráfico
     prisma.car.groupBy({
       by: ['brand'],
-      _count: { brand: true }, // ou _count: true
+      _count: { brand: true },
       where: { isAvailable: true },
       orderBy: { _count: { brand: 'desc' } },
       take: 6,
-    });
+    })
+  ]);
 
   const stockValue = totalValue._sum.price || 0;
   const averagePrice = totalCars > 0 ? stockValue / totalCars : 0;
