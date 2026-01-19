@@ -8,6 +8,8 @@ const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(value);
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboard() {
   // --- 1. BUSCAR DADOS (QUERIES PARALELAS PARA RAPIDEZ) ---
   const [totalCars, totalValue, soldCars, recentCars, brandStats] = await Promise.all([
@@ -31,17 +33,13 @@ export default async function AdminDashboard() {
     }),
 
     // Agrupar por marca para o gráfico
-    prisma.car.groupBy({
+    const brandStats = await prisma.car.groupBy({
       by: ['brand'],
-      _count: true,
-      orderBy: {
-        _count: {
-          brand: 'desc'
-        }
-      },
-      take: 6 // Top 6 marcas
-    })
-  ]);
+      _count: { brand: true }, // ou _count: true
+      where: { isAvailable: true },
+      orderBy: { _count: { brand: 'desc' } },
+      take: 6,
+    });
 
   const stockValue = totalValue._sum.price || 0;
   const averagePrice = totalCars > 0 ? stockValue / totalCars : 0;
