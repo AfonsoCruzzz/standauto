@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/../lib/prisma"; // Confirma se este import está a funcionar, ou usa o teu relativo
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/auth"; // Confirma se este import está a funcionar
-import { useRouter } from "next/navigation";
 
 // --- PATCH: Serve para VENDER (isAvailable) e para DESTACAR (isFeatured) ---
 export async function PATCH(
@@ -24,7 +23,6 @@ export async function PATCH(
     // Antes estavas a fazer: const { isFeatured } = await req.json();
     // Isso ignorava o "isAvailable". Agora lemos o corpo todo:
     const body = await req.json(); 
-    router.refresh();
     const updatedCar = await prisma.car.update({
       where: { id },
       data: body, // ✅ Agora aceita { isFeatured: true } OU { isAvailable: false }
